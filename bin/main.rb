@@ -1,5 +1,13 @@
 #!/usr/bin/env ruby
 require 'rainbow' # docs https://www.rubydoc.info/gems/rainbow/3.0.0
+require 'json'
+
+html_tags_file = File.read('./assets/html-tags.json')
+
+html_tags = JSON.parse(html_tags_file)
+
+p html_tags.include?('div')
+
 
 # to be moved to lib 
 
@@ -7,6 +15,7 @@ class Lint
   attr_accessor :file_hash
 
   def initialize
+    @files = [] # is this necessary
     @file_hash = {
       file_name: '',
       lines: []
@@ -40,13 +49,21 @@ for file in files
 
   puts Rainbow(file).underline.bright
   File.foreach(file).with_index { |line, i| lint.file_hash[:lines] << [i, line] }
-  puts lint.file_hash
+  puts lint.file_hash  
 end
-# next open and read file content - 1
+
+def classify_line(line)
+  line_classes = ['space', 'eof', 'comment', 'rule', 'setting'] # consider adding pseudo_el
+
+  #if .include? line[0]  # simple case - consider first space is empty spaces
+  return line_class
+end
 
 # no spaces if rule 
 
 # empty line before rule
+
+# html tags https://gist.github.com/cecchi/99772a8483914b112400
 
 # rule needs to be #rule {, .rule, html element { 
 # find rule simple
