@@ -1,6 +1,19 @@
 #!/usr/bin/env ruby
 require 'rainbow' # docs https://www.rubydoc.info/gems/rainbow/3.0.0
 
+# to be moved to lib 
+
+class Lint 
+  attr_accessor :file_hash
+
+  def initialize
+    @file_hash = {
+      file_name: '',
+      lines: []
+    }
+  end
+end
+
 # get input
 
 in_args = ARGV
@@ -22,12 +35,18 @@ end
 
 # loop through files - after open
 for file in files
+  lint = Lint.new
+  lint.file_hash[:file_name] = file  
+
   puts Rainbow(file).underline.bright
-  File.foreach(file) { |line| p line }
+  File.foreach(file).with_index { |line, i| lint.file_hash[:lines] << [i, line] }
+  puts lint.file_hash
 end
 # next open and read file content - 1
 
 # no spaces if rule 
+
+# empty line before rule
 
 # rule needs to be #rule {, .rule, html element { 
 # find rule simple
