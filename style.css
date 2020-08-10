@@ -3,9 +3,21 @@
   color: blue;
 }
 
+#bob {
+  font-size: 12em;
+}
+   
   .container-bad {
 background-color: #fff;    
 color: red
+}
+
+ p {
+   color: blue
+ }
+
+div {
+  background-color: aqua;
 }
 
 /* check*/
