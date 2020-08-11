@@ -1,11 +1,15 @@
 .container {
-  background-color: #fff;
-  color: blue;
+  background-color: #fff
+  color: blue
 }
+
+/* not identifying missing semi colon */
+.class { color: blue }
+.class { color: blue } 
 
   .cptatoner {  
 
-  }
+   }
 
 p {
   color: blue;
