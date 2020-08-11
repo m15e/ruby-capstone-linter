@@ -1,0 +1,9 @@
+ p {
+   color: blue
+ }
+
+div {
+  background-color: aqua;
+}
+
+p { font-size: 15em; }  /* check */

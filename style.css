@@ -3,21 +3,26 @@
   color: blue;
 }
 
+  .cptatoner {  
+
+  }
+
+p {
+  color: blue;
+} 
+ .rule {
+
+ }
 #bob {
   font-size: 12em;
 }
    
-  .container-bad {
-background-color: #fff;    
-color: red
-}
-
- p {
-   color: blue
- }
-
 div {
-  background-color: aqua;
+  width: 50px;
+  }
+   
+/*comment simple*/
+span {
+  color: blue;
+/* */
 }
-
-/* check*/
