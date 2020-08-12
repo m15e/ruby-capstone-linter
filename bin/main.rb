@@ -6,7 +6,6 @@ require_relative '../lib/lint.rb'
 
 in_args = ARGV
 
-
 files = Dir.glob('**/**.css')
 
 if files.empty?

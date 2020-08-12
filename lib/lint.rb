@@ -11,7 +11,7 @@ class Lint
     $html_tags = JSON.parse(html_tags_file)
 
     $css_props = []
-    css_props_file = File.read('./assets/css-properties.json')    
+    css_props_file = File.read('./assets/css-properties.json')
     JSON.parse(css_props_file).each { |pr| $css_props << pr.values[0] }
     $css_props = $css_props.uniq
 
@@ -51,7 +51,7 @@ class Lint
   def css_rule_after_double_indent
     @file_hash[:lines_double_indent].each do |l|
       if css_prop?(l[-2]) == 'not-css-prop'
-        @file_hash[:errors] << [l[0], "#{l[0]}:3 ", ' Expecting css-rule after double indent', l]
+        @file_hash[:errors] << [l[0], "#{l[0]}:3 ", ' Expected css-rule after double indent', l]
       end
     end
   end
@@ -60,7 +60,7 @@ class Lint
     @file_hash[:lines_double_indent].each do |l|
       line = l[-2]
       if (css_prop?(line) != 'not-css-prop') and !line.end_with?(";\n")
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expected trailing semicolon when setting CSS property.']
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expected trailing semicolon when setting CSS prop.']
       end
     end
   end
