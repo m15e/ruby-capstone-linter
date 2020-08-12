@@ -1,6 +1,8 @@
 require 'json'
 require_relative './line_checker.rb'
 
+# rubocop:disable Style/GlobalVars
+
 class Lint 
   include LineChecker
   attr_accessor :file_hash
@@ -87,3 +89,4 @@ class Lint
   end
 
 end
+# rubocop:enable Style/GlobalVars

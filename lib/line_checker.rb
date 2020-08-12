@@ -1,4 +1,5 @@
 # rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Style/GlobalVars
 module LineChecker
   def space_split(line)
     line.split(' ')
@@ -68,3 +69,4 @@ module LineChecker
 
 end
 # rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Style/GlobalVars
