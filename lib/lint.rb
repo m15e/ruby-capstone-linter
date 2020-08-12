@@ -23,6 +23,7 @@ class Lint
     no_newline_after_oneline_declaration
     close_curly_alone
     eof_newline?
+    pad_err_loc
   end
 
   def setup(file)
@@ -89,5 +90,15 @@ class Lint
 
     @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
   end
+  
+  def pad_err_loc
+    @file_hash[:errors].each do |l|
+      error_loc = l[0]  
+      pad_length = (7 - error_loc.length)
+      pad_str = " " * pad_length
+      l.append(pad_str) 
+    end
+  end
 end
 # rubocop:enable Style/GlobalVars
+
