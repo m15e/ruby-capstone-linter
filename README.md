@@ -24,7 +24,6 @@ There's a semi-colon after the css property is set.
 .container {
   color: blue; 
 }
-
 ```
 
 \# Bad example
@@ -34,7 +33,6 @@ Missing semi-colon.
 .container {
   color: blue 
 }
-
 ```
 
 ### <ins>Missing EOS newline</ins>
