@@ -1,2 +1,2 @@
-source "https://rubygems.org" 
+source 'https://rubygems.org'
 gem 'rainbow', '~> 3.0'
