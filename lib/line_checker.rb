@@ -1,5 +1,6 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Style/GlobalVars
+# rubocop:disable Lint/UselessAssignment
 module LineChecker
   def space_split(line)
     line.split(' ')
@@ -20,12 +21,12 @@ module LineChecker
   def html_selector?(line)
     $html_tags.include?(first_el(line))
   end
-  
+
   def class_selector?(line)
     first_el(line).start_with?('.')
   end
-  
-  def id_selector?(line)  
+
+  def id_selector?(line)
     first_el(line).start_with?('#')
   end
 
@@ -52,7 +53,7 @@ module LineChecker
   def newline?(line)
     line.split("/\s+/")[-1].include?("\n")
   end
-  
+
   def css_prop?(line)
     r = line.split(':')[0].strip
     $css_props.include?(r) ? r : 'not-css-prop'
@@ -66,7 +67,8 @@ module LineChecker
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
     line_start = empty_line?(line) ? 'empty_line' : line_start
   end
-
 end
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Style/GlobalVars
+# rubocop:enable Lint/UselessAssignment
+

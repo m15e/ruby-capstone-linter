@@ -12,7 +12,7 @@ class Lint
     $html_tags = JSON.parse(html_tags_file)
 
     css_props_file = File.read('./assets/css-properties.json')
-    css_props = Array.new
+    css_props = []
     css_props = JSON.parse(css_props_file).each { |pr| css_props << pr.values[0] }
 
     $css_props = css_props.uniq
