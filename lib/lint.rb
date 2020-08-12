@@ -1,6 +1,6 @@
 require 'json'
 require_relative './line_checker.rb'
-
+# rubocop:disable Style/GlobalVars
 
 class Lint
   include LineChecker
@@ -67,7 +67,7 @@ class Lint
   def close_curly_alone
     @file_hash[:lines_close_bracket].each do |l|
       if l[1] != 'close_bracket'
-        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, expecting \"}\" without leading\trailing spaces.']   
+        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, no leading\trailing spaces.']   
       end
     end
   end
@@ -76,6 +76,7 @@ class Lint
     @file_hash[:lines_rules].each do |l|
       line = l[-2]
       next unless line.include?('{') and line.include?('}')
+      
         if line.end_with?(" \n")
           @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Missing new line after single line declaration.']
         end      
@@ -88,3 +89,4 @@ class Lint
       @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']    
   end
 end
+# rubocop:enable Style/GlobalVars
