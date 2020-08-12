@@ -36,7 +36,7 @@ class Lint
       lines_rules: [],
       errors: []
     }
-  
+
     File.readlines(file).each_with_index do |line, i|
       @file_hash[:lines_all] << [i + 1, classify_start(line), line.length, last_el_raw(line), newline?(line)]
     end
@@ -79,7 +79,7 @@ class Lint
 
       if line.end_with?(" \n")
         @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Missing new line after single line declaration.']
-      end      
+      end
     end
   end
 
@@ -87,7 +87,7 @@ class Lint
     last_line = @file_hash[:lines_all].last
     return unless last_line[-1] == false
 
-    @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline'] 
+    @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
   end
 end
 # rubocop:enable Style/GlobalVars
