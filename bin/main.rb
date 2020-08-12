@@ -25,7 +25,7 @@ files.each do |file|
   puts "total lines: #{lint.instance_variable_get(:@file_hash)[:line_count] + 1}"
 
   lint.instance_variable_get(:@file_hash)[:errors].each do |err|
-    puts err[1].to_s + err[-1].to_s + Rainbow('✖  ').red + err[2].to_s    
+    puts err[1].to_s + err[-1].to_s + Rainbow('✖  ').red + err[2].to_s
   end
   puts "\n"
 end

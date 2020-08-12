@@ -60,7 +60,7 @@ class Lint
     @file_hash[:lines_double_indent].each do |l|
       line = l[-2]
       if (css_prop?(line) != 'not-css-prop') and !line.end_with?(";\n")
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expected trailing semicolon when setting CSS property.'.]
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expected trailing semicolon when setting CSS property.']
       end
     end
   end
@@ -68,7 +68,7 @@ class Lint
   def close_curly_alone
     @file_hash[:lines_close_bracket].each do |l|
       if l[1] != 'close_bracket'
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, no leading/trailing spaces.'.]
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, no leading/trailing spaces.']
       end
     end
   end
