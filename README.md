@@ -4,7 +4,107 @@
 
 ![screenshot](./assets/screenshot.png)
 
-Additional description about the project and its features.
+A CSS linter that checks for the following errors
+
+- Checks for trailing semi-colon after setting a CSS property.
+- Checks for missing end-of-source newline.
+- Checks if double indentation is followed by a valid CSS rule.
+- Checks for newline and no leading or trailing spaces surrounding closing curly bracket.
+- Checks for newline after single line declaration.
+- Checks if single line declaration has only 1 declaration.
+
+## Good vs. Bad Code Examples
+
+### <ins>Trailing semi-colon after setting a CSS property</ins>
+
+\# Good example
+
+There's a semi-colon after the css property is set.
+```css
+.container {
+  color: blue; 
+}
+
+```
+
+\# Bad example
+
+Missing semi-colon.
+```css
+.container {
+  color: blue 
+}
+
+```
+
+### <ins>Missing EOS newline</ins>
+
+\# Good example
+
+```css
+section {
+  color: blue; 
+} 
+/* file ends here with final empty line */
+```
+
+\# Bad example
+
+```css
+section {
+  color: blue; 
+} /* file ends here without final empty line */
+```
+
+### <ins>Closing Brackets should be on their own</ins>
+
+\# Good example
+
+The closing bracket has no leading or trailing spaces.
+
+```css
+div {
+  font-size: 12px; # double indent 
+}
+```
+
+\# Bad example
+
+The closing bracket has leading and trailing spaces.
+
+```css
+section {
+  color: blue; 
+   }   
+```
+
+### <ins>Missing newline after single line declaration</ins>
+
+\# Good example
+
+The closing bracket no leading spaces.
+
+```css
+div { font-size: 12px; }
+
+.new-rule {
+  color: #fff;
+  font-size: 11px;
+}
+```
+
+\# Bad example
+
+The closing bracket has empty spaces after the closing bracket.
+
+```css
+div { font-size: 12px; }   |
+
+.new-rule {
+  color: #fff;
+  font-size: 11px;
+}
+```
 
 ## Built With
 
