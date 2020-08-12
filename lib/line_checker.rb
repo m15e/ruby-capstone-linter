@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/CyclomaticComplexity
 module LineChecker
   def space_split(line)
     line.split(' ')
@@ -14,37 +15,37 @@ module LineChecker
   def last_el_raw(line)
     raw_split(line)[0]
   end
-  
+
   def html_selector?(line)
-    $html_tags.include?(first_el(line)) 
+    $html_tags.include?(first_el(line))
   end
   
   def class_selector?(line)
-    first_el(line).start_with?('.') 
+    first_el(line).start_with?('.')
   end
   
   def id_selector?(line)  
-    first_el(line).start_with?('#') 
+    first_el(line).start_with?('#')
   end
-  
+
   def double_indent?(line)
     line.start_with?('  ')
   end
-  
+
   def count_spaces(line)
     line.count(' ')
   end
-  
+
   def no_space(line)
     line.count(' ').zero?
   end
-  
+
   def valid_ml_close?(line)
-    no_space(line) and (line.length == 2) and line.include?("}\n") 
+    no_space(line) and (line.length == 2) and line.include?("}\n")
   end
-  
+
   def empty_line?(line)
-    (line == "\n") and (line.length == 1) and (count_spaces(line) == 0)
+    (line == "\n") and (line.length == 1) and count_spaces(line).zero?
   end
 
   def newline?(line)
@@ -64,5 +65,6 @@ module LineChecker
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
     line_start = empty_line?(line) ? 'empty_line' : line_start
   end
-  
+
 end
+# rubocop:enable Metrics/CyclomaticComplexity
