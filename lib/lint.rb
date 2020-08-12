@@ -11,10 +11,10 @@ class Lint
     $html_tags = JSON.parse(html_tags_file)
 
     $css_props = []
-    css_props_file = File.read('./assets/css-properties.json')        
+    css_props_file = File.read('./assets/css-properties.json')    
     JSON.parse(css_props_file).each { |pr| $css_props << pr.values[0] }
-    $css_props = $css_props.uniq    
-    
+    $css_props = $css_props.uniq
+
     $selector_arr = %w[html_tag id_selector class_selector]
 
     setup(file)
@@ -23,7 +23,7 @@ class Lint
     no_newline_after_oneline_declaration
     close_curly_alone
     eof_newline?
-    sort_and_pad_errors    
+    sort_and_pad_errors
   end
 
   def setup(file)
@@ -60,7 +60,7 @@ class Lint
     @file_hash[:lines_double_indent].each do |l|
       line = l[-2]
       if (css_prop?(line) != 'not-css-prop') and !line.end_with?(";\n")
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expecting a trailing semicolon when setting CSS property.', l]
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expected trailing semicolon when setting CSS property.'.]
       end
     end
   end
@@ -68,7 +68,7 @@ class Lint
   def close_curly_alone
     @file_hash[:lines_close_bracket].each do |l|
       if l[1] != 'close_bracket'
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, no leading/trailing spaces.', l]
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, no leading/trailing spaces.'.]
       end
     end
   end
@@ -93,13 +93,12 @@ class Lint
   
   def sort_and_pad_errors
     @file_hash[:errors].each do |l|
-      error_loc = l[1]  
+      error_loc = l[1]
       pad_length = (7 - error_loc.length)
-      pad_str = " " * pad_length
-      l.append(pad_str) 
+      pad_str = ' ' * pad_length
+      l.append(pad_str)
     end
     @file_hash[:errors] = @file_hash[:errors].sort_by(&:first)
   end
-  
 end
 # rubocop:enable Style/GlobalVars

@@ -56,9 +56,7 @@ module LineChecker
 
   def css_prop?(line)
     r = line.split(':')[0].strip
-    
-    #puts "split_item: #{$css_props.include?(r)} r: #{r}"
-    $css_props.include?(r) ? r : 'not-css-prop'    
+    $css_props.include?(r) ? r : 'not-css-prop'
   end
 
   def classify_start(line)
