@@ -23,7 +23,7 @@ class Lint
     rule_ends_with_semicolon
     no_newline_after_oneline_declaration
     close_curly_alone
-    is_EOF_newline
+    eof_newline?
   end
 
   def setup(file)    
@@ -67,8 +67,8 @@ class Lint
 
   def close_curly_alone
     @file_hash[:lines_close_bracket].each do |l|
-      if l[1] != 'close_bracket' 
-        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, expecting \"}\" with no leading or trailing spaces.']      
+      if l[1] != 'close_bracket'
+        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, expecting \"}\" without leading\trailing spaces.']     
       end
     end
   end
@@ -76,7 +76,7 @@ class Lint
   def no_newline_after_oneline_declaration
     @file_hash[:lines_rules].each do |l|
       line = l[-2]
-      if line.include?('{') and line.include?("}")
+      if line.include?('{') and line.include?('}')
         if line.end_with?(" \n")
           @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Missing new line after single line declaration.']
         end
@@ -84,7 +84,7 @@ class Lint
     end
   end
 
-  def is_EOF_newline
+  def eof_newline?
     last_line = @file_hash[:lines_all].last
     if last_line[-1] == false
       @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
