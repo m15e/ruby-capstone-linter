@@ -87,10 +87,10 @@ class Lint
   def eof_newline?
     last_line = @file_hash[:lines_all].last
     return unless last_line[-1] == false
-    
+
     @file_hash[:errors] << [last_line[0], "#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
   end
-  
+
   def sort_and_pad_errors
     @file_hash[:errors].each do |l|
       error_loc = l[1]
