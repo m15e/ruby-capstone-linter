@@ -3,7 +3,7 @@ require_relative './line_checker.rb'
 
 # rubocop:disable Style/GlobalVars
 
-class Lint 
+class Lint
   include LineChecker
   attr_accessor :file_hash
 
@@ -16,9 +16,9 @@ class Lint
     css_props = JSON.parse(css_props_file).each { |pr| css_props << pr.values[0] }
 
     $css_props = css_props.uniq
-    $selector_arr = ['html_tag', 'id_selector', 'class_selector']
+    $selector_arr = %w[html_tag id_selector class_selector]
 
-    setup(file)    
+    setup(file)
     css_rule_after_double_indent
     rule_ends_with_semicolon
     no_newline_after_oneline_declaration
@@ -31,33 +31,36 @@ class Lint
       file_name: file,
       line_count: `wc -l < #{file}`.to_i,
       lines_all: [],
-      lines_double_indent: [],      
+      lines_double_indent: [],
       lines_open_bracket: [],
       lines_close_bracket: [],
       lines_rules: [],
       errors: []
     }
-    
-    File.readlines(file).each_with_index { |line, i| @file_hash[:lines_all] << [i+1, classify_start(line), line.length, last_el_raw(line), newline?(line)] }
+  
+    File.readlines(file).each_with_index do |line, i| 
+      @file_hash[:lines_all] << [i + 1, classify_start(line), line.length, last_el_raw(line), newline?(line)] 
+    end
+
     @file_hash[:lines_double_indent] = @file_hash[:lines_all].select { |line| line[1] == 'double_indent' }
-    @file_hash[:lines_open_bracket] =  @file_hash[:lines_all].select { |line| line[-2].include? "{" }
-    @file_hash[:lines_close_bracket] =  @file_hash[:lines_all].select { |line| line[-2].include? "{" }
-    @file_hash[:lines_rules] =  @file_hash[:lines_all].select { |line| $selector_arr.any?(line[1]) }
+    @file_hash[:lines_open_bracket] = @file_hash[:lines_all].select { |line| line[-2].include? '{' }
+    @file_hash[:lines_close_bracket] = @file_hash[:lines_all].select { |line| line[-2].include? '{' }
+    @file_hash[:lines_rules] = @file_hash[:lines_all].select { |line| $selector_arr.any?(line[1]) }
   end
 
   def css_rule_after_double_indent
     @file_hash[:lines_double_indent].each do |l|
       if css_prop?(l[-2]) == 'not-css-prop'
-        @file_hash[:errors] << ["#{l[0]}:3 ", " Expecting css-rule after double indent"]
-      end  
+        @file_hash[:errors] << ["#{l[0]}:3 ", ' Expecting css-rule after double indent']
+      end
     end
   end
 
   def rule_ends_with_semicolon
     @file_hash[:lines_double_indent].each do |l|
       line = l[-2]
-      if (css_prop?(line) != 'not-css-prop') and (!(line).end_with?(";\n"))
-        @file_hash[:errors] << ["#{l[0]}:#{line.length} ", " Expecting a trailing semicolon after setting CSS property."]
+      if (css_prop?(line) != 'not-css-prop') and !line.end_with?(";\n")
+        @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Expecting a trailing semicolon after setting CSS property.']
       end  
     end
   end
@@ -65,17 +68,17 @@ class Lint
   def close_curly_alone
     @file_hash[:lines_close_bracket].each do |l|
       if l[1] != 'close_bracket' 
-        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", " Invalid close bracket, expecting \"}\" with no leading or trailing spaces."]      
+        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, expecting \"}\" with no leading or trailing spaces.']      
       end
     end
   end
 
   def no_newline_after_oneline_declaration
     @file_hash[:lines_rules].each do |l|
-      line = l[-2]      
+      line = l[-2]
       if line.include?('{') and line.include?("}")
         if line.end_with?(" \n")
-          @file_hash[:errors] << ["#{l[0]}:#{line.length} ", " Missing new line after single line declaration."]         
+          @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Missing new line after single line declaration.']
         end
       end
     end
@@ -83,10 +86,9 @@ class Lint
 
   def is_EOF_newline
     last_line = @file_hash[:lines_all].last
-    if last_line[-1] == false      
-      @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", " Missing end-of-source newline"]    
+    if last_line[-1] == false
+      @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
     end
   end
-
 end
 # rubocop:enable Style/GlobalVars

@@ -71,4 +71,3 @@ end
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Style/GlobalVars
 # rubocop:enable Lint/UselessAssignment
-
