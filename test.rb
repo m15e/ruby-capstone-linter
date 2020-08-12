@@ -1,0 +1,1 @@
+p  "  color: blue\n".split(':')[0].strip
