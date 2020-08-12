@@ -26,7 +26,7 @@ class Lint
     eof_newline?
   end
 
-  def setup(file)    
+  def setup(file)
     @file_hash = {
       file_name: file,
       line_count: `wc -l < #{file}`.to_i,
@@ -38,8 +38,8 @@ class Lint
       errors: []
     }
   
-    File.readlines(file).each_with_index do |line, i| 
-      @file_hash[:lines_all] << [i + 1, classify_start(line), line.length, last_el_raw(line), newline?(line)] 
+    File.readlines(file).each_with_index do |line, i|
+      @file_hash[:lines_all] << [i + 1, classify_start(line), line.length, last_el_raw(line), newline?(line)]
     end
 
     @file_hash[:lines_double_indent] = @file_hash[:lines_all].select { |line| line[1] == 'double_indent' }
@@ -60,15 +60,15 @@ class Lint
     @file_hash[:lines_double_indent].each do |l|
       line = l[-2]
       if (css_prop?(line) != 'not-css-prop') and !line.end_with?(";\n")
-        @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Expecting a trailing semicolon after setting CSS property.']
-      end  
+        @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Expecting a trailing semicolon when setting CSS property.']
+      end
     end
   end
 
   def close_curly_alone
     @file_hash[:lines_close_bracket].each do |l|
       if l[1] != 'close_bracket'
-        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, expecting \"}\" without leading\trailing spaces.']     
+        @file_hash[:errors] << ["#{l[0]}:#{l[-2].length} ", ' Invalid close bracket, expecting \"}\" without leading\trailing spaces.']   
       end
     end
   end
@@ -76,7 +76,7 @@ class Lint
   def no_newline_after_oneline_declaration
     @file_hash[:lines_rules].each do |l|
       line = l[-2]
-      if line.include?('{') and line.include?('}')
+      next unless line.include?('{') and line.include?('}')
         if line.end_with?(" \n")
           @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Missing new line after single line declaration.']
         end
@@ -86,7 +86,7 @@ class Lint
 
   def eof_newline?
     last_line = @file_hash[:lines_all].last
-    if last_line[-1] == false
+    return unless last_line[-1] == false
       @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
     end
   end
