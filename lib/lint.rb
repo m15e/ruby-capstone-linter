@@ -88,4 +88,3 @@ class Lint
       @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']    
   end
 end
-
