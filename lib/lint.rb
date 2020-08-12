@@ -36,7 +36,7 @@ class Lint
       errors: []
     }
     
-    File.readlines(file).each_with_index { |line, i| @file_hash[:lines_all] << [i+1, classify_start(line), line.length, last_el_raw(line), has_newline(line)] }
+    File.readlines(file).each_with_index { |line, i| @file_hash[:lines_all] << [i+1, classify_start(line), line.length, last_el_raw(line), newline?(line)] }
     @file_hash[:lines_double_indent] = @file_hash[:lines_all].select { |line| line[1] == 'double_indent' }
     @file_hash[:lines_open_bracket] =  @file_hash[:lines_all].select { |line| line[-2].include? "{" }
     @file_hash[:lines_close_bracket] =  @file_hash[:lines_all].select { |line| line[-2].include? "{" }
@@ -45,7 +45,7 @@ class Lint
 
   def css_rule_after_double_indent
     @file_hash[:lines_double_indent].each do |l|
-      if has_css_prop(l[-2]) == 'not-css-prop'
+      if css_prop?(l[-2]) == 'not-css-prop'
         @file_hash[:errors] << ["#{l[0]}:3 ", " Expecting css-rule after double indent"]
       end  
     end
@@ -54,7 +54,7 @@ class Lint
   def rule_ends_with_semicolon
     @file_hash[:lines_double_indent].each do |l|
       line = l[-2]
-      if (has_css_prop(line) != 'not-css-prop') and (!(line).end_with?(";\n"))
+      if (css_prop?(line) != 'not-css-prop') and (!(line).end_with?(";\n"))
         @file_hash[:errors] << ["#{l[0]}:#{line.length} ", " Expecting a trailing semicolon after setting CSS property."]
       end  
     end
