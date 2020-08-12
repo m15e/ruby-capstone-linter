@@ -1,7 +1,6 @@
 require 'json'
 require_relative './line_checker.rb'
 
-# rubocop:disable Style/GlobalVars
 
 class Lint
   include LineChecker
@@ -79,16 +78,14 @@ class Lint
       next unless line.include?('{') and line.include?('}')
         if line.end_with?(" \n")
           @file_hash[:errors] << ["#{l[0]}:#{line.length} ", ' Missing new line after single line declaration.']
-        end
-      end
+        end      
     end
   end
 
   def eof_newline?
     last_line = @file_hash[:lines_all].last
     return unless last_line[-1] == false
-      @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
-    end
+      @file_hash[:errors] << ["#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']    
   end
 end
-# rubocop:enable Style/GlobalVars
+
