@@ -7,15 +7,29 @@ module LineChecker
   end
 
   def raw_split(line)
-    line.split("/\s+/")
+    [line, line.split("/\s+/")] # doesn't seem to be doing anything
+    #line.split("/\s+/")
   end
 
   def first_el(line)
     space_split(line)[0].to_s
   end
 
-  def last_el_raw(line)
-    raw_split(line)[0]
+  def last_el(line)
+    space_split(line)[-1].to_s
+  end
+
+  def last_el_raw(line) # might not be needed anymore
+    #raw_split(line)[0]
+    raw_split(line)
+  end
+
+  def start_space_count(line)
+    line[/\A */].size
+  end
+
+  def end_space_count(line)
+    line[/ *\z/].size
   end
 
   def html_selector?(line)
@@ -31,7 +45,7 @@ module LineChecker
   end
 
   def double_indent?(line)
-    line.start_with?('  ')
+    start_space_count(line) == 2
   end
 
   def count_spaces(line)
@@ -55,21 +69,28 @@ module LineChecker
   end
 
   def newline?(line)
-    line.split("/\s+/")[-1].include?("\n")
+    line.include?("\n")
   end
 
+  # makes error of assuming : to follow double indent
   def css_prop?(line)
-    r = line.split(':')[0].strip
-    $css_props.include?(r) ? r : 'not-css-prop'
+    if !line.include?(':')
+      return 'not-css-prop'
+    else
+      r = line.split(':')[0].strip           
+      $css_props.include?(r) ? r : 'not-css-prop'
+    end
   end
 
   def classify_start(line)
+    line_start = ''
     line_start = html_selector?(line) ? 'html_tag' : line_start
     line_start = class_selector?(line) ? 'class_selector' : line_start
     line_start = id_selector?(line) ? 'id_selector' : line_start
-    line_start = double_indent?(line) ? 'double_indent' : line_start
+    line_start = start_space_count(line) == 2 ? 'double_indent' : line_start
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
     line_start = empty_line?(line) ? 'empty_line' : line_start
+    #line_start = line[1].nil? ? 'possible_error' : line_start
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity

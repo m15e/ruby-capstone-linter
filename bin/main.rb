@@ -21,12 +21,12 @@ end
 files.each do |file|  
   puts Rainbow(file).underline.bright
   lint = Lintr.new(file)
-  puts "total lines: #{lint.instance_variable_get(:@file_hash)[:line_count] + 1}"
+  puts "total lines: #{lint.file_hash[:line_count] + 1}"
   #p lint.instance_variable_get(:@file_hash)[:lines_close_bracket]
-  lint.instance_variable_get(:@file_hash)[:errors].each do |err|
+  lint.file_hash[:errors].each do |err|
     puts err[1].to_s + err[-1].to_s + Rainbow('✖  ').red + err[2].to_s
   end
   #p lint.instance_variable_get(:@file_hash)[:lines_rules]
-  p lint.instance_variable_get(:@file_hash)[:rules_single]
+  p lint.file_hash[:rules_single]
   puts "\n"
 end
