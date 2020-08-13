@@ -1,12 +1,12 @@
 require 'line_checker'
 
 describe LineChecker do
-  include LineChecker 
+  include LineChecker
   let(:single_line_rule) { ".container { background-color: blue; }\n" }
-  let(:spaces_start) { "   .container {\n" }  
-  let(:four_spaces_start) { "    p {\n" }  
-  let(:four_spaces_end) { "p {    \n" }  
-  
+  let(:spaces_start) { "   .container {\n" }
+  let(:four_spaces_start) { "    p {\n" }
+  let(:four_spaces_end) { "p {    \n" }
+
   describe '#first_el' do
     it 'returns the first element of a space split array' do
       expect(first_el(single_line_rule)).to eql('.container')
@@ -89,7 +89,7 @@ describe LineChecker do
     end
 
     it 'correctly identifies poorly spaced closing bracket (single-line-case)' do
-      expect(valid_sl_close?(".container { background-color: blue; } ")).to eql(false)
+      expect(valid_sl_close?('.container { background-color: blue; } ')).to eql(false)
     end
   end
 
@@ -97,11 +97,9 @@ describe LineChecker do
     it 'returns true when it correctly identifies an empty line' do
       expect(empty_line?("\n")).to eql(true)
     end
-    
+
     it 'returns false when line is not empty' do
       expect(empty_line?(spaces_start)).to eql(false)
     end
   end
-  
 end
-

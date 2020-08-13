@@ -46,7 +46,7 @@ class Lintr
       rules_single: [],
       errors: []
     }
-    File.readlines(file).each_with_index do |line, i|      
+    File.readlines(file).each_with_index do |line, i|
       last_el = last_el(line)
       nl_at_end = newline?(line)
       @file_hash[:lines_all] << [i + 1, classify_start(line), line.length, line, last_el, nl_at_end]

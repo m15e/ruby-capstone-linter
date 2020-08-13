@@ -85,7 +85,7 @@ module LineChecker
   end
 
   def css_prop?(line)
-    return 'not-css-prop' if !line.include?(':')
+    return 'not-css-prop' unless line.include?(':')
     
     r = line.split(':')[0].strip
     $css_props.include?(r) ? r : 'not-css-prop'
