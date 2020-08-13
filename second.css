@@ -1,9 +1,9 @@
  p {
-   color: blue
+  color: blue
  }
 
 div {
-  background-color: aqua;
+   background-color: aqua;
 }
 
 p { font-size: 15em; }  /* check */

@@ -15,7 +15,16 @@ module Rules
     end  
   end
 
-  def rule_ends_with_semicolon
+  def starting_spaces?
+    @file_hash[:lines_all].each do |l|
+      line = l[-3]
+      if start_space_count(line) >= 3
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Too many spaces at start of line.']
+      end
+    end
+  end
+
+  def rule_ends_with_semicolon    
     out_str = ' Expected trailing semicolon when setting CSS prop.'
     @file_hash[:rules_single].each do |l| 
       line = l[-3] 
@@ -26,8 +35,17 @@ module Rules
 
     @file_hash[:lines_double_indent].each do |l|
       line = l[-3]      
-      if (css_prop?(line) != 'not-css-prop') and !line.end_with?(';\n')
+      if (css_prop?(line) != 'not-css-prop') and !has_semi?(line)
         @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str]
+      end
+    end
+  end
+
+  def trailing_spaces?
+    @file_hash[:lines_all].each do |l|
+      line = l[-3]
+      if end_space_count(line) > 0
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' No trailing spaces at end of line.']
       end
     end
   end
@@ -55,6 +73,6 @@ module Rules
     last_line = @file_hash[:lines_all].last
     return unless last_line[-1] == false
 
-    @file_hash[:errors] << [last_line[0], "#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline']
+    @file_hash[:errors] << [last_line[0], "#{last_line[0]}:#{last_line[2]} ", ' Missing end-of-source newline.']
   end
 end  

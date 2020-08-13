@@ -1,32 +1,29 @@
 .container {
-  background-color: #fff
   color: blue
-}
-
-div {
-  width: 50px;
-  }
-    
-/* not identifying missing semi colon */
-.class { color: blue }
-.class { color: blue; } 
-
-  .cptatoner {  
-
-   }
-
-p {
-  color: blue;
 } 
- .rule {
 
- }
-#bob {
-  font-size: 12em;
-  funky: 12px;
+.container { 
+    color: blue 
+  color: blue 
+  font-size:
 }
-   
+
+.container {
+  color: blue 
+  font-size: 
+}
+
+.container { color: #000; } 
+
+.container { color: #000 }
+
 div {
-  width: 50px;
-  }
-   
+
+}  
+
+div { color: red; } 
+
+.container {
+   background-color: #fff 
+  color: blue 
+  }  

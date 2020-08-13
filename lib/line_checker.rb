@@ -6,11 +6,6 @@ module LineChecker
     line.split(' ')
   end
 
-  def raw_split(line)
-    [line, line.split("/\s+/")] # doesn't seem to be doing anything
-    #line.split("/\s+/")
-  end
-
   def first_el(line)
     space_split(line)[0].to_s
   end
@@ -72,6 +67,10 @@ module LineChecker
     line.include?("\n")
   end
 
+  def has_semi?(line)
+    line.include?(";")
+  end
+
   # makes error of assuming : to follow double indent
   def css_prop?(line)
     if !line.include?(':')
@@ -89,8 +88,7 @@ module LineChecker
     line_start = id_selector?(line) ? 'id_selector' : line_start
     line_start = start_space_count(line) == 2 ? 'double_indent' : line_start
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
-    line_start = empty_line?(line) ? 'empty_line' : line_start
-    #line_start = line[1].nil? ? 'possible_error' : line_start
+    line_start = empty_line?(line) ? 'empty_line' : line_start    
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity

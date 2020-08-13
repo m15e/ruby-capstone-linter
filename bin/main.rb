@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'rainbow'
-require_relative '../lib/lint.rb'
+require_relative '../lib/lintr.rb'
 
 # get input files
 
@@ -26,7 +26,7 @@ files.each do |file|
   lint.file_hash[:errors].each do |err|
     puts err[1].to_s + err[-1].to_s + Rainbow('✖  ').red + err[2].to_s
   end
-  #p lint.instance_variable_get(:@file_hash)[:lines_rules]
-  p lint.file_hash[:rules_single]
-  puts "\n"
+  puts "\n"    
 end
+
+
