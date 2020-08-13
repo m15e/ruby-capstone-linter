@@ -143,13 +143,7 @@ The code has too many spaces at the start of the lines.
 
 Click on the link below to watch a video introduction of this project
 
-[Video Introduction](https://youtube.com)
-
-## Online Demo Link
-
-To try the linter online visit the link below, however cloning and running the project locally is recommended.
-
-[Live Demo](https://livedemo.com) 
+[Video Introduction](https://www.youtube.com/watch?v=ntQ4TBZtOH8)
 
 ## Running the linter locally
 
