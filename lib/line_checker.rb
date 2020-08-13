@@ -42,6 +42,10 @@ module LineChecker
     line.count(' ').zero?
   end
 
+  def single_line_check(line)
+    line.include?('{') and line.include?('}')
+  end
+
   def valid_ml_close?(line)
     no_space(line) and (line.length == 2) and line.include?("}\n")
   end
