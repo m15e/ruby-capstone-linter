@@ -19,11 +19,11 @@ module LineChecker
   end
 
   def end_space_count(line)
-    line[/ *\z/].size
+    line.gsub("\n",'')[/ *\z/].size
   end
 
-  def html_selector?(line)
-    $html_tags.include?(first_el(line))
+  def double_indent?(line)
+    start_space_count(line) == 2
   end
 
   def class_selector?(line)
@@ -32,10 +32,6 @@ module LineChecker
 
   def id_selector?(line)
     first_el(line).start_with?('#')
-  end
-
-  def double_indent?(line)
-    start_space_count(line) == 2
   end
 
   def count_spaces(line)
@@ -70,16 +66,8 @@ module LineChecker
     line.include?(";")
   end
 
-  # makes error of assuming : to follow double indent
-  def css_prop?(line)
-    if !line.include?(':')
-      return 'not-css-prop'
-    else
-      r = line.split(':')[0].strip           
-      $css_props.include?(r) ? r : 'not-css-prop'
-    end
-  end
-
+  private
+  
   def classify_start(line)
     line_start = ''
     line_start = html_selector?(line) ? 'html_tag' : line_start
@@ -89,6 +77,19 @@ module LineChecker
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
     line_start = valid_sl_close?(line) ? 'close_bracket' : line_start
     line_start = empty_line?(line) ? 'empty_line' : line_start    
+  end
+
+  def html_selector?(line)
+    $html_tags.include?(first_el(line))
+  end
+
+  def css_prop?(line)
+    if !line.include?(':')
+      return 'not-css-prop'
+    else
+      r = line.split(':')[0].strip           
+      $css_props.include?(r) ? r : 'not-css-prop'
+    end
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity

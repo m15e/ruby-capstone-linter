@@ -12,6 +12,7 @@ A CSS linter that checks for the following errors
 - Checks for newline and no leading or trailing spaces surrounding closing curly bracket.
 - Checks for newline after single line declaration.
 - Checks if single line declaration has only 1 declaration.
+- Checks for too many spaces at end or at start.
 
 ## Good vs. Bad Code Examples
 
@@ -100,6 +101,34 @@ div { font-size: 12px; }   |
 
 .new-rule {
   color: #fff;
+  font-size: 11px;
+}
+```
+
+### <ins>Too many spaces at start or end</ins>
+
+\# Good example
+
+Maximum of 2 spaces at start of line.
+
+```css
+div { font-size: 12px; }
+
+.new-rule {
+  color: #fff;
+  font-size: 11px;
+}
+```
+
+\# Bad examples
+
+The code has too many spaces at the start of the lines.
+
+```css
+  div { font-size: 12px; }   
+
+.new-rule {
+    color: #fff;
   font-size: 11px;
 }
 ```

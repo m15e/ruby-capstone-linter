@@ -6,7 +6,9 @@ require_relative './rules.rb'
 class Lintr
   include LineChecker
   include Rules
-  attr_accessor :file_hash
+  attr_reader :file_hash
+
+  private
 
   def initialize(file)
     html_tags_file = File.read('./assets/html-tags.json')
@@ -59,7 +61,6 @@ class Lintr
     @file_hash[:lines_rules] = @file_hash[:lines_all].select { |line| $selector_arr.any?(line[1]) }
   end
 
-
   def sort_and_pad_errors
     @file_hash[:errors].each do |l|
       error_loc = l[1]
@@ -69,5 +70,6 @@ class Lintr
     end
     @file_hash[:errors] = @file_hash[:errors].sort_by(&:first)
   end
+
 end
 # rubocop:enable Style/GlobalVars
