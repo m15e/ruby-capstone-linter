@@ -9,32 +9,26 @@ module Rules
 
   def single_line_rule?
     @file_hash[:lines_rules].each do |l|
-      if single_line_check(l[-3])        
-        @file_hash[:rules_single] << l
-      end      
+      if single_line_check(l[-3]) then @file_hash[:rules_single] << l end    
     end  
   end
 
   def starting_spaces?
     @file_hash[:lines_all].each do |l|
       line = l[-3]
-      if start_space_count(line) >= 3
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Too many spaces at start of line.']
-      end
+      if start_space_count(line) >= 3 then @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Too many spaces at start of line.'] end
     end
   end
 
-  def rule_ends_with_semicolon    
+  def rule_ends_with_semicolon
     out_str = ' Expected trailing semicolon when setting CSS prop.'
-    @file_hash[:rules_single].each do |l| 
-      line = l[-3] 
-      if !line.split(':')[1].include?(';')
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str]
-      end
+    @file_hash[:rules_single].each do |l|
+      line = l[-3]
+      if !line.split(':')[1].include?(';') then @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] end
     end
 
     @file_hash[:lines_double_indent].each do |l|
-      line = l[-3]      
+      line = l[-3]
       if (css_prop?(line) != 'not-css-prop') and !semi?(line)
         @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str]
       end
@@ -44,9 +38,7 @@ module Rules
   def trailing_spaces?
     @file_hash[:lines_all].each do |l|
       line = l[-3]
-      if end_space_count(line) > 0
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' No trailing spaces at end of line.']
-      end
+      if end_space_count(line) > 0 then @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' No trailing spaces at end of line.'] end
     end
   end
 

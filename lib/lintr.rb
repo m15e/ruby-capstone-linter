@@ -46,13 +46,11 @@ class Lintr
       rules_single: [],
       errors: []
     }
-    File.readlines(file).each_with_index do |line, i|
-      start_el = classify_start(line)
-      line_len = line.length
+    File.readlines(file).each_with_index do |line, i|      
       last_el = last_el(line)
       nl_at_end = newline?(line)
-      @file_hash[:lines_all] << [i + 1, start_el, line_len, line, last_el, nl_at_end]
-    end    
+      @file_hash[:lines_all] << [i + 1, classify_start(line), line.length, line, last_el, nl_at_end]
+    end
     @file_hash[:lines_double_indent] = @file_hash[:lines_all].select { |line| line[1] == 'double_indent' }
     @file_hash[:lines_open_bracket] = @file_hash[:lines_all].select { |line| line[-3].include? '{' }
     @file_hash[:lines_close_bracket] = @file_hash[:lines_all].select { |line| line[-3].include? '}' }

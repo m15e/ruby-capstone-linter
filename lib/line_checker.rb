@@ -1,5 +1,5 @@
 # rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Style/GlobalVars
 # rubocop:disable Lint/UselessAssignment
 module LineChecker
@@ -68,7 +68,7 @@ module LineChecker
   end
 
   private
-  
+
   def classify_start(line)
     line_start = ''
     line_start = html_selector?(line) ? 'html_tag' : line_start
@@ -88,7 +88,7 @@ module LineChecker
     return 'not-css-prop' if !line.include?(':')
     
     r = line.split(':')[0].strip
-    $css_props.include?(r) ? r : 'not-css-prop'    
+    $css_props.include?(r) ? r : 'not-css-prop'
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity
