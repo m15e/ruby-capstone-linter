@@ -14,11 +14,6 @@ module LineChecker
     space_split(line)[-1].to_s
   end
 
-  def last_el_raw(line) # might not be needed anymore
-    #raw_split(line)[0]
-    raw_split(line)
-  end
-
   def start_space_count(line)
     line[/\A */].size
   end
@@ -59,6 +54,10 @@ module LineChecker
     no_space(line) and (line.length == 2) and line.include?("}\n")
   end
 
+  def valid_sl_close?(line)
+    single_line_check(line) and line.end_with?("; }\n")
+  end
+
   def empty_line?(line)
     (line == "\n") and (line.length == 1) and count_spaces(line).zero?
   end
@@ -88,6 +87,7 @@ module LineChecker
     line_start = id_selector?(line) ? 'id_selector' : line_start
     line_start = start_space_count(line) == 2 ? 'double_indent' : line_start
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
+    line_start = valid_sl_close?(line) ? 'close_bracket' : line_start
     line_start = empty_line?(line) ? 'empty_line' : line_start    
   end
 end

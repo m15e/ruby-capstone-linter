@@ -27,6 +27,7 @@ files.each do |file|
     puts err[1].to_s + err[-1].to_s + Rainbow('✖  ').red + err[2].to_s
   end
   puts "\n"    
+  p lint.file_hash[:lines_all]
 end
 
 

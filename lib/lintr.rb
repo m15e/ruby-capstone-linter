@@ -22,9 +22,9 @@ class Lintr
     setup(file)
 
     css_rule_after_double_indent    
-    no_newline_after_oneline_declaration
-    close_curly_alone
+    no_newline_after_oneline_declaration    
     single_line_rule?
+    close_curly_alone
     rule_ends_with_semicolon
     trailing_spaces?
     starting_spaces?
