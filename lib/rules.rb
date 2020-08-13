@@ -2,7 +2,7 @@ module Rules
   def css_rule_after_double_indent
     @file_hash[:lines_double_indent].each do |l|   
       if css_prop?(l[-3]) == 'not-css-prop'
-        @file_hash[:errors] << [l[0], "#{l[0]}:3 ", ' Expected css-rule after double indent', l]
+        @file_hash[:errors] << [l[0], "#{l[0]}:3 ", ' Expected css-rule after double indent.', l]
       end
     end
   end
@@ -16,10 +16,18 @@ module Rules
   end
 
   def rule_ends_with_semicolon
+    out_str = ' Expected trailing semicolon when setting CSS prop.'
+    @file_hash[:rules_single].each do |l| 
+      line = l[-3] 
+      if !line.split(':')[1].include?(';')
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str]
+      end
+    end
+
     @file_hash[:lines_double_indent].each do |l|
-      line = l[-3]
-      if (css_prop?(line) != 'not-css-prop') and !line.end_with?(";\n")
-        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", ' Expected trailing semicolon when setting CSS prop.']
+      line = l[-3]      
+      if (css_prop?(line) != 'not-css-prop') and !line.end_with?(';\n')
+        @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str]
       end
     end
   end

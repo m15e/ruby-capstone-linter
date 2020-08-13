@@ -20,11 +20,11 @@ class Lintr
     $selector_arr = %w[html_tag id_selector class_selector]
 
     setup(file)
-    css_rule_after_double_indent
-    rule_ends_with_semicolon
+    css_rule_after_double_indent    
     no_newline_after_oneline_declaration
     close_curly_alone
     single_line_rule?
+    rule_ends_with_semicolon
     eof_newline?
     sort_and_pad_errors
   end

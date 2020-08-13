@@ -23,15 +23,10 @@ p {
  }
 #bob {
   font-size: 12em;
-  funky
+  funky: 12px;
 }
    
 div {
   width: 50px;
   }
    
-/*comment simple*/
-span {
-  color: blue;
-/* */
-}
