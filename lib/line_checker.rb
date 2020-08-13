@@ -1,4 +1,5 @@
 # rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
 # rubocop:disable Style/GlobalVars
 # rubocop:disable Lint/UselessAssignment
 module LineChecker
@@ -19,7 +20,7 @@ module LineChecker
   end
 
   def end_space_count(line)
-    line.gsub("\n",'')[/ *\z/].size
+    line.gsub("\n", '')[/ *\z/].size
   end
 
   def double_indent?(line)
@@ -62,8 +63,8 @@ module LineChecker
     line.include?("\n")
   end
 
-  def has_semi?(line)
-    line.include?(";")
+  def semi?(line)
+    line.include?(';')
   end
 
   private
@@ -76,7 +77,7 @@ module LineChecker
     line_start = start_space_count(line) == 2 ? 'double_indent' : line_start
     line_start = valid_ml_close?(line) ? 'close_bracket' : line_start
     line_start = valid_sl_close?(line) ? 'close_bracket' : line_start
-    line_start = empty_line?(line) ? 'empty_line' : line_start    
+    line_start = empty_line?(line) ? 'empty_line' : line_start
   end
 
   def html_selector?(line)
@@ -84,14 +85,13 @@ module LineChecker
   end
 
   def css_prop?(line)
-    if !line.include?(':')
-      return 'not-css-prop'
-    else
-      r = line.split(':')[0].strip           
-      $css_props.include?(r) ? r : 'not-css-prop'
-    end
+    return 'not-css-prop' if !line.include?(':')
+    
+    r = line.split(':')[0].strip
+    $css_props.include?(r) ? r : 'not-css-prop'    
   end
 end
 # rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Style/GlobalVars
 # rubocop:enable Lint/UselessAssignment

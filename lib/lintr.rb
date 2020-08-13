@@ -23,8 +23,8 @@ class Lintr
 
     setup(file)
 
-    css_rule_after_double_indent    
-    no_newline_after_oneline_declaration    
+    css_rule_after_double_indent
+    no_newline_after_oneline_declaration
     single_line_rule?
     close_curly_alone
     rule_ends_with_semicolon
@@ -46,7 +46,6 @@ class Lintr
       rules_single: [],
       errors: []
     }
-
     File.readlines(file).each_with_index do |line, i|
       start_el = classify_start(line)
       line_len = line.length
@@ -54,7 +53,6 @@ class Lintr
       nl_at_end = newline?(line)
       @file_hash[:lines_all] << [i + 1, start_el, line_len, line, last_el, nl_at_end]
     end    
-
     @file_hash[:lines_double_indent] = @file_hash[:lines_all].select { |line| line[1] == 'double_indent' }
     @file_hash[:lines_open_bracket] = @file_hash[:lines_all].select { |line| line[-3].include? '{' }
     @file_hash[:lines_close_bracket] = @file_hash[:lines_all].select { |line| line[-3].include? '}' }
@@ -70,6 +68,5 @@ class Lintr
     end
     @file_hash[:errors] = @file_hash[:errors].sort_by(&:first)
   end
-
 end
 # rubocop:enable Style/GlobalVars

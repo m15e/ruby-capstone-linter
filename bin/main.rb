@@ -25,8 +25,6 @@ files.each do |file|
   lint.file_hash[:errors].each do |err|
     puts err[1].to_s + err[-1].to_s + Rainbow('✖  ').red + err[2].to_s
   end
-
-  if lint.file_hash[:errors].empty? then puts Rainbow('✔ ✔ ✔ ').green + "Clean file. No infringements detected." end
-
-  puts "\n"    
+  if lint.file_hash[:errors].empty? then puts Rainbow('✔ ✔ ✔ ').green + 'Clean file. No infringements detected.' end
+  puts "\n"
 end

@@ -1,6 +1,6 @@
 module Rules
   def css_rule_after_double_indent
-    @file_hash[:lines_double_indent].each do |l|   
+    @file_hash[:lines_double_indent].each do |l|
       if css_prop?(l[-3]) == 'not-css-prop'
         @file_hash[:errors] << [l[0], "#{l[0]}:3 ", ' Expected css-rule after double indent.', l]
       end
@@ -35,7 +35,7 @@ module Rules
 
     @file_hash[:lines_double_indent].each do |l|
       line = l[-3]      
-      if (css_prop?(line) != 'not-css-prop') and !has_semi?(line)
+      if (css_prop?(line) != 'not-css-prop') and !semi?(line)
         @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str]
       end
     end
