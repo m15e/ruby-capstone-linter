@@ -9,7 +9,7 @@ module Rules
 
   def single_line_rule?
     @file_hash[:lines_rules].each do |l|
-      if single_line_check(l[-3]) then @file_hash[:rules_single] << l end
+      @file_hash[:rules_single] << l if single_line_check(l[-3])
     end
   end
 
@@ -17,7 +17,7 @@ module Rules
     out_str = ' Too many spaces at start of line.'
     @file_hash[:lines_all].each do |l|
       line = l[-3]
-      if start_space_count(line) >= 3 then @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] end
+      @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] if start_space_count(line) >= 3
     end
   end
 
@@ -25,7 +25,7 @@ module Rules
     out_str = ' Expected trailing semicolon when setting CSS prop.'
     @file_hash[:rules_single].each do |l|
       line = l[-3]
-      unless line.split(':')[1].include?(';') then @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] end
+      @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] unless line.split(':')[1].include?(';')
     end
 
     @file_hash[:lines_double_indent].each do |l|
@@ -40,7 +40,7 @@ module Rules
     out_str = ' No trailing spaces at end of line.'
     @file_hash[:lines_all].each do |l|
       line = l[-3]
-      if end_space_count(line).positive? then @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] end
+      @file_hash[:errors] << [l[0], "#{l[0]}:#{line.length} ", out_str] if end_space_count(line).positive?
     end
   end
 
