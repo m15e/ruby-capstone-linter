@@ -1,0 +1,12 @@
+.container { background-color: blue; }
+
+p { font-size: 12px; }
+
+div {
+  color: #00b3ff;
+}
+
+header {
+  width: 80px;
+  height: 20px;
+}
